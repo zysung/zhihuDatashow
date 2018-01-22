@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zysung.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.zysung.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_token" property="userToken" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="business" property="business" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="employment" property="employment" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="agrees" property="agrees" jdbcType="INTEGER" />
+    <result column="thanks" property="thanks" jdbcType="INTEGER" />
+    <result column="asks" property="asks" jdbcType="INTEGER" />
+    <result column="answers" property="answers" jdbcType="INTEGER" />
+    <result column="posts" property="posts" jdbcType="INTEGER" />
+    <result column="followees" property="followees" jdbcType="INTEGER" />
+    <result column="followers" property="followers" jdbcType="INTEGER" />
+    <result column="hashId" property="hashid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_token, location, business, sex, employment, education, username, url, agrees, 
+    thanks, asks, answers, posts, followees, followers, hashId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectTop10Thanks" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from user ORDER BY thanks DESC LIMIT 0,10
+  </select>
+  <select id="getUserCount" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM user
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.zysung.entity.User" >
+    insert into user (id, user_token, location, 
+      business, sex, employment, 
+      education, username, url, 
+      agrees, thanks, asks, 
+      answers, posts, followees, 
+      followers, hashId)
+    values (#{id,jdbcType=INTEGER}, #{userToken,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+      #{business,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{employment,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{agrees,jdbcType=INTEGER}, #{thanks,jdbcType=INTEGER}, #{asks,jdbcType=INTEGER}, 
+      #{answers,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, #{followees,jdbcType=INTEGER}, 
+      #{followers,jdbcType=INTEGER}, #{hashid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.zysung.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userToken != null" >
+        user_token,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="business != null" >
+        business,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="employment != null" >
+        employment,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="agrees != null" >
+        agrees,
+      </if>
+      <if test="thanks != null" >
+        thanks,
+      </if>
+      <if test="asks != null" >
+        asks,
+      </if>
+      <if test="answers != null" >
+        answers,
+      </if>
+      <if test="posts != null" >
+        posts,
+      </if>
+      <if test="followees != null" >
+        followees,
+      </if>
+      <if test="followers != null" >
+        followers,
+      </if>
+      <if test="hashid != null" >
+        hashId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userToken != null" >
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null" >
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="employment != null" >
+        #{employment,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="agrees != null" >
+        #{agrees,jdbcType=INTEGER},
+      </if>
+      <if test="thanks != null" >
+        #{thanks,jdbcType=INTEGER},
+      </if>
+      <if test="asks != null" >
+        #{asks,jdbcType=INTEGER},
+      </if>
+      <if test="answers != null" >
+        #{answers,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null" >
+        #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="followees != null" >
+        #{followees,jdbcType=INTEGER},
+      </if>
+      <if test="followers != null" >
+        #{followers,jdbcType=INTEGER},
+      </if>
+      <if test="hashid != null" >
+        #{hashid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.zysung.entity.User" >
+    update user
+    <set >
+      <if test="userToken != null" >
+        user_token = #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null" >
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="employment != null" >
+        employment = #{employment,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="agrees != null" >
+        agrees = #{agrees,jdbcType=INTEGER},
+      </if>
+      <if test="thanks != null" >
+        thanks = #{thanks,jdbcType=INTEGER},
+      </if>
+      <if test="asks != null" >
+        asks = #{asks,jdbcType=INTEGER},
+      </if>
+      <if test="answers != null" >
+        answers = #{answers,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null" >
+        posts = #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="followees != null" >
+        followees = #{followees,jdbcType=INTEGER},
+      </if>
+      <if test="followers != null" >
+        followers = #{followers,jdbcType=INTEGER},
+      </if>
+      <if test="hashid != null" >
+        hashId = #{hashid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.zysung.entity.User" >
+    update user
+    set user_token = #{userToken,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      business = #{business,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      employment = #{employment,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      agrees = #{agrees,jdbcType=INTEGER},
+      thanks = #{thanks,jdbcType=INTEGER},
+      asks = #{asks,jdbcType=INTEGER},
+      answers = #{answers,jdbcType=INTEGER},
+      posts = #{posts,jdbcType=INTEGER},
+      followees = #{followees,jdbcType=INTEGER},
+      followers = #{followers,jdbcType=INTEGER},
+      hashId = #{hashid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

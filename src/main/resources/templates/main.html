@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>知乎用户大数据</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet"/>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/china.js}"></script>
+    <script>
+            $(function() {
+                $(".nav li").click(function() {
+                    $(this).addClass("active");
+                    $($(this).siblings()).removeClass("active");
+                });
+            });
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">知乎用户大数据分析报告</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" onclick="alert('第十七小组版权所有，翻版必究');">About</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search..."/>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#m1">性别比例</a></li>
+                <li><a href="#m2">学历分布</a></li>
+                <li><a href="#m3">用户行业Top10</a></li>
+                <li><a href="#m4">用户就职公司Top10</a></li>
+                <li><a href="#m5">用户居住地分布</a></li>
+                <li><a href="#m6">赞同数Top10</a></li>
+                <li><a href="#m7">感谢数top10</a></li>
+                <li><a href="#m8">提问数Top10</a></li>
+                <li><a href="#m9">回答数Top10</a></li>
+                <li><a href="#m10">文章数Top10</a></li>
+                <li><a href="#m11">粉丝数Top10</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="page-header">当前用户数据量：<span th:text="${userCount}"></span> </h2>
+
+            <div class="row placeholders">
+
+            </div>
+            <div id="m1" style="height: 70px;"></div>
+            <div id="sex" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script type="text/javascript">
+                var mychart = echarts.init(document.getElementById("sex"));
+                var option = {
+                    backgroundColor: '#2c343c',
+
+                    title: {
+                        text: '知乎性别比例',
+                        left: 'center',
+                        top: 20,
+                        textStyle: {
+                            color: '#ccc'
+                        }
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+
+                    visualMap: {
+                        show: false,
+                        min: 80,
+                        max: 600,
+                        inRange: {
+                            colorLightness: [0, 1]
+                        }
+                    },
+                    series : [
+                        {
+                            name:'人数',
+                            type:'pie',
+                            radius : '55%',
+                            center: ['50%', '50%'],
+                            data:[
+                                {value:584894, name:'男性'},
+                                {value:509096, name:'女性'},
+                                {value:335061, name:'没写性别的人'},
+
+                            ].sort(function (a, b) { return a.value - b.value; }),
+                            roseType: 'radius',
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    lineStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    },
+                                    smooth: 0.2,
+                                    length: 10,
+                                    length2: 20
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: '#c23531',
+                                    shadowBlur: 200,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+                                    label:{
+                                        show: true,
+                                        formatter: "{b} : {c}人 ({d}%)"
+                                    },
+                                    labelLine :{show:true}
+                                }
+                            },
+
+                            animationType: 'scale',
+                            animationEasing: 'elasticOut',
+                            animationDelay: function (idx) {
+                                return Math.random() * 200;
+                            }
+                        }
+                    ]
+                };
+                mychart.setOption(option);
+            </script>
+            <div id="m2" style="height: 70px;"></div>
+            <div id="educationTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart10 = echarts.init(document.getElementById("educationTop10"));
+                var option10 = {
+                    title: {
+                        text: '知乎学历（学校）Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['人数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['北京大学','清华大学','浙江大学', '武汉大学',  '上海交通大学', '复旦大学','华中科技大学',  '南京大学', '同济大学', '中国人民大学'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'人数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[5468,4714,4674,3785,3578,3419,3165,2837,2524,2303],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        },
+
+                    ]
+                };
+                mychart10.setOption(option10);
+            </script>
+            <div id="m3" style="height: 70px;"></div>
+            <div id="businessTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var mychart8 = echarts.init(document.getElementById("businessTop10"));
+                var option8 = {
+                    title : {
+                        text: '知乎行业Top10',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['互联网','计算机软件','高等教育','金融','高新科技','创意艺术','法律','电子商务','临床医疗','教育','其他']
+                    },
+                    series : [
+                        {
+                            name: '行业占比',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:[
+                                {value:108597, name:'互联网'},
+                                {value:37909, name:'计算机软件'},
+                                {value:21600, name:'高等教育'},
+                                {value:20679, name:'金融'},
+                                {value:15156, name:'高新科技'},
+                                {value:14968,name:'创意艺术'},
+                                {value:13482,name:'法律'},
+                                {value:13311,name:'电子商务'},
+                                {value:11529,name:'临床医疗'},
+                                {value:10100,name:'教育'},
+                                {value:260408,name:'其他'}
+
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+
+                                },
+                                normal: {
+                                    label:{
+                                        show: true,
+                                        formatter: "{b} : {c} ({d}%)"
+                                    },
+                                    labelLine :{show:true}
+                                }
+                            }
+                        }
+                    ]
+                };
+                mychart8.setOption(option8);
+            </script>
+            <div id="m4" style="height: 70px;"></div>
+            <div id="employmentTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart9 = echarts.init(document.getElementById("employmentTop10"));
+                var option9 = {
+                    title: {
+                        text: '知乎公司Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['人数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['学生','腾讯','阿里巴巴', '百度',  '自由职业', '网易','华为',  '谷歌', '互联网', '微软'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'人数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[2110,1879,1408,1322,586,567,563,401,376,347],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        },
+
+                    ]
+                };
+                mychart9.setOption(option9);
+            </script>
+            <div id="m5" style="height: 70px;"></div>
+            <div id="locationTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
+            <script th:src="@{/js/mymap.js}"></script>
+            <div id="fansTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart2 = echarts.init(document.getElementById("fansTop10"));
+                var option2 = {
+                    title: {
+                        text: '知乎粉丝数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['粉丝数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['张佳玮', '李开复', '丁香医生', '黄继新', '周源', 'yolfilm', '张亮','李淼','朱炫','张小北'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'粉丝数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[1485973, 1035270, 857015, 815577, 796558, 777974, 747078,676727,675823,673872],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        }
+                    ]
+                };
+                mychart2.setOption(option2);
+
+            </script>
+            <div id="m6" style="height: 70px;"></div>
+            <div id="agreesTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart3 = echarts.init(document.getElementById("agreesTop10"));
+                var option3 = {
+                    title: {
+                        text: '知乎赞同数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['赞同数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['张佳玮', 'Seasee Youl', 'vczh', '马前卒', '鬼木知', '唐缺', '肥肥猫','朱炫','豆子','ze ran'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'赞同数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[4241283, 1892167,1756841,1668997 , 1619641, 1593317, 1418568,1378823,1372325,1359037],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        }
+                    ]
+                };
+                mychart3.setOption(option3);
+            </script>
+            <div id="m7" style="height: 70px;"></div>
+            <div id="thanksTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart4 = echarts.init(document.getElementById("thanksTop10"));
+                var option4 = {
+                    title: {
+                        text: '知乎感谢数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['感谢数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['张佳玮','肥肥猫', 'Seasee Youl',  '朱炫','马前卒', 'ze ran','寺主人',  '菠菜', 'yolfilm', '丁香医生'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'感谢数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[622684, 347171,300174,290397,276095,244893,236584,235956,229181,226351],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        }
+                    ]
+                };
+                mychart4.setOption(option4);
+
+            </script>
+            <div id="m8" style="height: 70px;"></div>
+            <div id="asksTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart5 = echarts.init(document.getElementById("asksTop10"));
+                var option5 = {
+                    title: {
+                        text: '知乎提问数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['提问数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['阿混',"尾宿","David Chang","玉萧杀","Howard Dominic","图灵Don","歆盐","ken tyou","张亮","程瀚"],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'提问数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[3153,3014,2685,2534,2527,2201,2059,1845,1767,1758],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        }
+                    ]
+                };
+                mychart5.setOption(option5);
+            </script>
+            <div id="m9" style="height: 70px;"></div>
+            <div id="answersTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart6 = echarts.init(document.getElementById("answersTop10"));
+                var option6 = {
+                    title: {
+                        text: '知乎回答数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['回答数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['Phil','vczh', '浪琴',  '王若枫','优酱', '李东','柴健翌',  'M3小蘑菇', '赵钢', 'zhen-liang'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'回答数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[17986,17510,13481,13391,12676,11977,11750,11492,11347,11149],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        }
+                    ]
+                };
+                mychart6.setOption(option6);
+            </script>
+            <div id="m10" style="height: 70px;"></div>
+            <div id="articlesTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart7 = echarts.init(document.getElementById("articlesTop10"));
+                var option7 = {
+                    title: {
+                        text: '知乎文章数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['文章数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['王佳伦','军旗猎猎', '扑克投资家-林辉',  '陈希','毛开云', '马力','张十三',  '侃speak', '嘶吼RoarTalk', '耿怀民'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'文章数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[1861,1708,1682,1543,1522,1521,1495,1436,1343,1300],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        },
+
+                    ]
+                };
+                mychart7.setOption(option7);
+            </script>
+            <div id="m11" style="height: 70px;"></div>
+            <div id="followersTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
+            <script>
+                var  mychart11 = echarts.init(document.getElementById("followersTop10"));
+                var option11 = {
+                    title: {
+                        text: '知乎粉丝数Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['粉丝数']
+                    },
+                    color: ['#c23531'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ['张佳玮','李开复', '丁香医生',  '黄继新','周源', 'yolfilm','张亮',  '李淼', '朱炫', '张小北'],
+                            axisLabel:{
+                                interval:0,
+                                rotate:45,
+                                margin:2,
+                                textStyle:{
+                                    color:"#222"
+                                }
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'粉丝数',
+                            type:'bar',
+                            barWidth: '60%',
+                            data:[1485973,1035270,857015,815577,796558,777974,747078,676727,675823,673872],
+                            itemStyle : { normal: {label : {show: true, position:'top'}}}
+                        },
+
+                    ]
+                };
+                mychart11.setOption(option11);
+            </script>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

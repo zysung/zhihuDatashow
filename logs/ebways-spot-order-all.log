@@ -1,0 +1,26 @@
+2017-12-14 01:15:45,848  INFO MainController:48 - Starting MainController on zys-win with PID 8960 (C:\development\IdeaProjects\zhihuDatashow\target\classes started by songziyang95 in C:\development\IdeaProjects\zhihuDatashow)
+2017-12-14 01:15:45,860  INFO MainController:593 - No active profile set, falling back to default profiles: default
+2017-12-14 01:15:46,654  INFO AnnotationConfigEmbeddedWebApplicationContext:583 - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6dbb137d: startup date [Thu Dec 14 01:15:46 CST 2017]; root of context hierarchy
+2017-12-14 01:15:47,729  INFO Version:30 - HV000001: Hibernate Validator 5.3.6.Final
+2017-12-14 01:15:52,882  INFO TomcatEmbeddedServletContainer:89 - Tomcat initialized with port(s): 8080 (http)
+2017-12-14 01:15:54,025  INFO ContextLoader:276 - Root WebApplicationContext: initialization completed in 7380 ms
+2017-12-14 01:15:55,771  INFO ServletRegistrationBean:190 - Mapping servlet: 'dispatcherServlet' to [/]
+2017-12-14 01:15:55,774  INFO ServletRegistrationBean:190 - Mapping servlet: 'statViewServlet' to [/druid/*]
+2017-12-14 01:15:55,784  INFO FilterRegistrationBean:258 - Mapping filter: 'characterEncodingFilter' to: [/*]
+2017-12-14 01:15:55,785  INFO FilterRegistrationBean:258 - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2017-12-14 01:15:55,786  INFO FilterRegistrationBean:258 - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2017-12-14 01:15:55,786  INFO FilterRegistrationBean:258 - Mapping filter: 'requestContextFilter' to: [/*]
+2017-12-14 01:15:55,786  INFO FilterRegistrationBean:271 - Mapping filter: 'webStatFilter' to urls: [/*]
+2017-12-14 01:16:00,090  INFO RequestMappingHandlerAdapter:534 - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6dbb137d: startup date [Thu Dec 14 01:15:46 CST 2017]; root of context hierarchy
+2017-12-14 01:16:00,582  INFO RequestMappingHandlerMapping:543 - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-12-14 01:16:00,587  INFO RequestMappingHandlerMapping:543 - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-12-14 01:16:00,671  INFO SimpleUrlHandlerMapping:362 - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-12-14 01:16:00,672  INFO SimpleUrlHandlerMapping:362 - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-12-14 01:16:00,774  INFO SimpleUrlHandlerMapping:362 - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-12-14 01:16:03,214  INFO AnnotationMBeanExporter:431 - Registering beans for JMX exposure on startup
+2017-12-14 01:16:03,217  INFO AnnotationMBeanExporter:916 - Bean with name 'dataSource' has been autodetected for JMX exposure
+2017-12-14 01:16:03,227  INFO AnnotationMBeanExporter:671 - Located MBean 'dataSource': registering with JMX server as MBean [com.alibaba.druid.pool:name=dataSource,type=DruidDataSource]
+2017-12-14 01:16:03,387  INFO TomcatEmbeddedServletContainer:201 - Tomcat started on port(s): 8080 (http)
+2017-12-14 01:16:03,398  INFO MainController:57 - Started MainController in 19.245 seconds (JVM running for 23.778)
+2017-12-14 01:16:23,850  INFO DispatcherServlet:489 - FrameworkServlet 'dispatcherServlet': initialization started
+2017-12-14 01:16:24,022  INFO DispatcherServlet:508 - FrameworkServlet 'dispatcherServlet': initialization completed in 172 ms
