@@ -82,17 +82,19 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h2 class="page-header">当前用户数据量：<span th:text="${userCount}"></span> </h2>
-
             <div class="row placeholders">
-
             </div>
             <div id="m1" style="height: 70px;"></div>
             <div id="sex" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
-            <script type="text/javascript">
+            <script type="text/javascript" th:inline="javascript">
+                /*<![CDATA[*/
+                var maleNum = [[${male}]];
+                var femaleNum = [[${female}]];
+                var nowritesex = [[${nowritesex}]];
+                /*]]>*/
                 var mychart = echarts.init(document.getElementById("sex"));
                 var option = {
                     backgroundColor: '#2c343c',
-
                     title: {
                         text: '知乎性别比例',
                         left: 'center',
@@ -121,9 +123,9 @@
                             radius : '55%',
                             center: ['50%', '50%'],
                             data:[
-                                {value:584894, name:'男性'},
-                                {value:509096, name:'女性'},
-                                {value:335061, name:'没写性别的人'},
+                                {value:maleNum , name:'男性'},
+                                {value:femaleNum , name:'女性'},
+                                {value:nowritesex , name:'没写性别的人'},
 
                             ].sort(function (a, b) { return a.value - b.value; }),
                             roseType: 'radius',
@@ -169,8 +171,17 @@
             </script>
             <div id="m2" style="height: 70px;"></div>
             <div id="educationTop10" style="width:auto;height: 600px;margin-bottom: 30px;"></div>
-            <script>
+            <script th:inline="javascript">
                 var  mychart10 = echarts.init(document.getElementById("educationTop10"));
+                /*<![CDATA[*/
+                var eduMap = [[${eduTop10}]];
+                var edus = new Array();
+                var counts = new Array();
+                for(key in eduMap){
+                    edus.push(key);
+                    counts.push(eduMap[key]);
+                }
+                /*]]>*/
                 var option10 = {
                     title: {
                         text: '知乎学历（学校）Top10'
@@ -189,7 +200,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['北京大学','清华大学','浙江大学', '武汉大学',  '上海交通大学', '复旦大学','华中科技大学',  '南京大学', '同济大学', '中国人民大学'],
+                            data : edus,
                             axisLabel:{
                                 interval:0,
                                 rotate:45,
@@ -210,7 +221,7 @@
                             name:'人数',
                             type:'bar',
                             barWidth: '60%',
-                            data:[5468,4714,4674,3785,3578,3419,3165,2837,2524,2303],
+                            data:counts,
                             itemStyle : { normal: {label : {show: true, position:'top'}}}
                         },
 
@@ -432,8 +443,18 @@
             </script>
             <div id="m7" style="height: 70px;"></div>
             <div id="thanksTop10" style="width: auto;height: 600px;margin-bottom: 30px;"></div>
-            <script>
+            <script th:inline="javascript">
                 var  mychart4 = echarts.init(document.getElementById("thanksTop10"));
+                /*<![CDATA[*/
+                var list = [[${thanks}]];
+                var names = new Array();
+                var thanksNum = new Array();
+                for(var i = 0;i<list.length;i++){  //循环LIST
+                    var user = list[i];
+                    names[i] = user.username;
+                    thanksNum[i] = user.thanks;
+                }
+                /*]]>*/
                 var option4 = {
                     title: {
                         text: '知乎感谢数Top10'
@@ -452,7 +473,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['张佳玮','肥肥猫', 'Seasee Youl',  '朱炫','马前卒', 'ze ran','寺主人',  '菠菜', 'yolfilm', '丁香医生'],
+                            data : names,
                             axisLabel:{
                                 interval:0,
                                 rotate:45,
@@ -473,7 +494,7 @@
                             name:'感谢数',
                             type:'bar',
                             barWidth: '60%',
-                            data:[622684, 347171,300174,290397,276095,244893,236584,235956,229181,226351],
+                            data:thanksNum,
                             itemStyle : { normal: {label : {show: true, position:'top'}}}
                         }
                     ]
@@ -683,10 +704,8 @@
                 };
                 mychart11.setOption(option11);
             </script>
-
-
         </div>
-    </div>
+        </div>
 </div>
 
 <!-- Bootstrap core JavaScript

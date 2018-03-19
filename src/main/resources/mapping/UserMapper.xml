@@ -35,6 +35,18 @@
     <include refid="Base_Column_List" />
     from user ORDER BY thanks DESC LIMIT 0,10
   </select>
+  <select id="selectTop10Education" resultType="hashMap">
+    select education,count(*) as count from user where education != '' and education != '大学' and education != '大学本科'
+    group by education order by count desc limit 0,10;
+  </select>
+  <resultMap id="groupBySexMap" type="java.util.HashMap">
+    <result column="sex" property="sex" jdbcType="VARCHAR"/>
+    <result column="count" property="count" jdbcType="VARCHAR"/>
+  </resultMap>
+  <select id="selectSexNums" resultMap="groupBySexMap">
+    select  sex,count(*) as count from user
+    group by sex
+  </select>
   <select id="getUserCount" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM user
   </select>

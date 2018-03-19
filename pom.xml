@@ -65,6 +65,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.39</version>
         </dependency>
+        <!--Redis缓存配置-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>1.5.9.RELEASE</version>
+        </dependency>
+
         <!--json依赖-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -81,6 +89,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
         </dependency>
     </dependencies>
 

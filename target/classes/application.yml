@@ -24,6 +24,21 @@ spring:
         cache: false
         prefix: classpath:/templates/
         suffix: .html
+    redis:
+      database: 0
+      host: 139.199.66.249
+      port: 6379
+      password: 123456
+      timeout: 0
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+
+
+
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: cn.zysung.entity

@@ -1,6 +1,9 @@
 package cn.zysung.controller;
 
 import cn.zysung.service.UserService;
+import com.alibaba.druid.support.json.JSONUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,9 @@ public class UserController {
     @RequestMapping(value = "/zhihu",method = RequestMethod.GET)
     public String mainPage(Model model){
         model.addAttribute("userCount",userService.getUserCount());
+        model.addAttribute("thanks",userService.selectTop10Thanks());
+        model.addAllAttributes(userService.selectSexNums());
+        model.addAttribute("eduTop10", userService.selectTop10Education());
         return "main";
     }
 
